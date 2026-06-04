@@ -1,0 +1,2253 @@
+<!DOCTYPE HTML>
+
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, maximum-scale=1, minimal-ui, user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+
+    <title>Wormate.io Adventures Non-Stop</title>
+
+    <link rel="icon" href="/images/favicon.ico"/>
+    <link href="/css/style.css?v=190e761" rel="stylesheet"/>
+
+  <!-- ===== LOBBY WORMINDOBBY ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet" />
+  <style id="lobby-css">
+* { margin:0; padding:0; box-sizing:border-box; list-style:none; text-decoration:none; border:0; outline:0; background:none; }
+    html, body { height:100%; width:100%; }
+    body {
+      overflow:hidden;
+      font-family: Inter, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    img, a, svg, canvas { -webkit-user-drag:none; user-drag:none; }
+    input, textarea, select { -webkit-user-select:text; user-select:text; }
+
+    /* ===== APP BG ===== */
+    .app {
+      height: 100dvh;
+      width: 100%;
+      background: linear-gradient(180deg, rgb(5 16 26 / 78%), rgb(8 28 46 / 54%)),
+                  url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=1920&q=80') center / cover no-repeat;
+      position: relative;
+    }
+    .stage-wrap { position:relative; height:100%; width:100%; }
+    .stage {
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 1786px; height: 1070px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform: translate(-50%,-50%) scale(var(--stage-scale,1));
+      transform-origin: center center;
+      will-change: transform;
+      z-index: 1;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      height: 70px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 14px;
+      background: rgba(4,28,44,0.95);
+      color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,144,255,0.2), inset 0 0 20px rgba(0,144,255,0.05);
+    }
+    .header-logo {
+      font-weight: 900;
+      font-size: 36px;
+      color: #2ee9ff;
+      text-shadow: 0 0 20px rgba(46,233,255,0.6);
+      letter-spacing: -1px;
+    }
+    .header-logo span { color: #fff; }
+    .header-buttons { display:flex; align-items:center; gap:10px; }
+    .header-btn {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border: 1px solid #005a9e;
+      border-radius: 7px;
+      font-weight: 800;
+      font-size: 20px;
+      color: #fff;
+      cursor: pointer;
+      background: linear-gradient(180deg,#007acc,#005a9e);
+      box-shadow: 0 2px 0 #003d6b;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+    .header-btn:hover { background:linear-gradient(180deg,#0090ff,#007acc); filter:brightness(1.1); }
+    .exit-btn { background:linear-gradient(180deg,#d32f2f,#b71c1c); border-color:#b71c1c; }
+
+    /* ===== SHELL GRID ===== */
+    .shell {
+      width: 100%;
+      height: 920px;
+      border-radius: 34px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 540px 625px 540px;
+      gap: 20px;
+      color: #fff;
+      box-shadow: 0 0 20px rgb(0 144 255 / 71%), inset 0 0 20px rgba(0,144,255,0.05);
+      background: #0a1a34;
+    }
+    .panel {
+      background: rgba(4,28,44,0.95);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+      min-width: 0; min-height: 0;
+      color: #fff;
+      box-shadow: 0 0 24px rgba(0,144,255,0.2), inset 0 0 20px rgba(0,144,255,0.05);
+    }
+
+    /* ===== LEFT PANEL ===== */
+    .logo-item { width:345px; height:182px; }
+    .logo-item img { width:100%; height:100%; object-fit:contain; display:block; }
+    .logo-text-big {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 182px;
+    }
+    .logo-text-big h1 {
+      font-size: 72px;
+      font-weight: 900;
+      color: #2ee9ff;
+      text-shadow: 0 0 30px rgba(46,233,255,0.8), 0 0 60px rgba(46,233,255,0.4);
+      letter-spacing: -2px;
+    }
+    .logo-text-big h1 span { color:#fff; }
+
+    .rklm-box {
+      width: 100%;
+      flex: 1;
+      background: rgba(4,28,44,0.8) !important;
+      border: 1.5px solid rgba(0,144,255,0.3);
+      border-radius: 14px;
+      padding: 20px;
+      overflow-y: scroll;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+    .rklm-box::-webkit-scrollbar { display:none; }
+    .rklm-box h2 { color:#00b6ff; font-size:1.1rem; font-weight:900; margin-bottom:15px; text-transform:uppercase; }
+    .rklm-box h3 { color:#00d2ff; font-size:1rem; font-weight:800; margin:20px 0 10px; }
+    .rklm-box p, .rklm-box li { color:#b0c4de; font-size:0.9rem; line-height:1.6; margin-bottom:12px; }
+    .rklm-box ul { padding-left:15px; margin-bottom:15px; }
+    .rklm-box li { list-style-type:"▹ "; margin-bottom:6px; }
+    .pro-tip-box { background:rgba(0,255,157,0.1); border:1px dashed #00ff9d; padding:12px; border-radius:8px; margin:15px 0; color:#00ff9d; font-size:0.85rem; }
+    .final-call { text-align:center; padding:15px; border-top:1px solid rgba(0,144,255,0.2); margin-top:20px; color:#fff; }
+
+    /* ===== CENTER PANEL ===== */
+    #homeMain { width:100%; height:100%; display:flex; flex-direction:column; gap:20px; justify-content:space-between; }
+    .center-top { width:100%; display:flex; flex-direction:column; gap:20px; align-items:center; }
+
+    /* Skin preview area - no worm, just styled background */
+    .home-center-skins {
+      width: 100%;
+      height: 155px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0,144,255,0.2), inset 0 0 20px rgba(0,144,255,0.05);
+      background: linear-gradient(135deg, #041c2c 0%, #0a2a4a 50%, #041c2c 100%);
+      border: 1px solid rgba(0,144,255,0.3);
+    }
+    .skin-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(0,182,255,0.5);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+    .skin-placeholder svg { opacity: 0.4; }
+
+    /* decorative hex grid bg */
+    .home-center-skins::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20 2l15 8.66v17.32L20 38 5 27.98V10.66z' fill='none' stroke='rgba(0,144,255,0.08)' stroke-width='1'/%3E%3C/svg%3E");
+      background-size: 40px 40px;
+    }
+
+    /* Center controls */
+    .center-controls { width:100%; display:flex; flex-direction:column; align-items:center; gap:20px; }
+    .play-game-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 80px;
+      border: 1px solid #cc4400;
+      border-radius: 7px;
+      font-weight: 800;
+      font-size: 32px;
+      color: #fff;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: linear-gradient(180deg,#ff7b00,#ff5500);
+      box-shadow: 0 2px 0 #993300, 0 0 10px rgba(255,85,0,0.4);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+      transition: all 0.15s;
+    }
+    .play-game-btn:hover { background:linear-gradient(180deg,#ff9500,#ff6600); transform:translateY(-1px); filter:brightness(1.1); }
+    .home-center-buttons { display:flex; align-items:center; gap:12px; }
+    .h-btn {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      padding: 0 18px;
+      border: 1px solid #005a9e;
+      border-radius: 7px;
+      font-weight: 800;
+      font-size: 18px;
+      color: #fff;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: linear-gradient(180deg,#007acc,#005a9e);
+      box-shadow: 0 2px 0 #003d6b;
+    }
+    .h-btn:hover { background:linear-gradient(180deg,#0090ff,#007acc); filter:brightness(1.1); }
+
+    /* Server selector (empty for now) */
+    .center-bottom { width:100%; display:flex; flex-direction:column; gap:20px; min-height:0; }
+    .server-region-tabs { display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:flex-end; }
+    .server-tab {
+      padding: 6px 12px;
+      border-radius: 50px;
+      border: 2px solid #0090ff;
+      color: #0090ff;
+      font: 900 16px/1 Inter;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .server-tab:hover { transform:translateY(-1px); }
+    .server-tab.active { background:linear-gradient(180deg,#0090ff,#0090ff); color:#fff; }
+    .server-list-area {
+      flex: 1;
+      border-radius: 16px;
+      border: 1.5px solid rgba(0,144,255,0.2);
+      background: rgba(2,18,28,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      color: rgba(0,144,255,0.4);
+      font: 800 16px/1 Inter;
+      letter-spacing: 1px;
+    }
+
+    /* ===== RIGHT PANEL ===== */
+    .player-card {
+      width: 100%;
+      border-radius: 16px;
+      padding: 18px;
+      background: rgba(4,28,44,0.95);
+      box-shadow: 0 0 15px rgba(0,144,255,0.2), inset 0 0 20px rgba(0,144,255,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .pi-top { display:flex; align-items:center; gap:10px; }
+    .avatar {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display: flex; align-items:center; justify-content:center;
+      background: linear-gradient(180deg,#bff6ff,#72e7ff);
+      box-shadow: 0 0 0 4px #34d2ff inset, 0 0 0 1.5px #000;
+      border: 1px solid #fff;
+      overflow: hidden;
+      font-weight: 900; font-size: 16px; color: #0a1a34;
+    }
+    .pi-name { display:flex; align-items:center; gap:20px; }
+    .pi-name h3 { font-weight:900; font-size:22px; }
+    .badge {
+      display: inline-block;
+      padding: 8px 15px;
+      border-radius: 999px;
+      font: 900 16px/1 Inter;
+      color: #fff;
+      background: linear-gradient(180deg,#ff7b00,#ff5500);
+      box-shadow: 0 0 0 1px #000;
+    }
+
+    /* Right panel placeholder content */
+    .right-placeholder {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      border: 1.5px dashed rgba(0,144,255,0.2);
+      border-radius: 14px;
+      padding: 30px;
+      text-align: center;
+    }
+    .right-placeholder p { color: rgba(207,227,255,0.4); font-size: 15px; font-weight: 700; }
+
+    /* ===== FOOTER ===== */
+    .site-footer { width:100%; display:flex; align-items:center; }
+    .footer-inner {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-radius: 12px;
+      padding: 8px 14px;
+      background: rgba(4,28,44,0.95);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(0,144,255,0.2), inset 0 0 20px rgba(0,144,255,0.05);
+    }
+    .foot-left { font-weight:700; font-size:16px; color:#fff; }
+    .foot-links { display:flex; gap:20px; }
+    .foot-link { font-weight:700; font-size:16px; color:#00b6ff; }
+    .foot-link:hover { color:#fff; }
+    .foot-center { display:flex; align-items:center; gap:12px; }
+    .social-icon { width:28px; height:28px; object-fit:contain; filter:drop-shadow(0 0 6px rgba(0,144,255,0.35)); opacity:0.8; transition:opacity 0.2s,transform 0.2s; }
+    .social-icon:hover { opacity:1; transform:translateY(-2px); }
+    .foot-right { display:flex; align-items:center; gap:30px; }
+    .support-mail { font-weight:700; font-size:16px; color:#fff; }
+    .footer-site-link {
+      font-weight:800; font-size:16px; color:#fff;
+      padding: 6px 12px;
+      border: 1px solid #005a9e;
+      border-radius: 7px;
+      background: linear-gradient(180deg,#007acc,#005a9e);
+      box-shadow: 0 2px 0 #003d6b;
+    }
+
+    /* ===== LEADERBOARD MODAL ===== */
+    .lb-wrap {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      z-index: 10000;
+    }
+    .lb-wrap.active { display: grid; }
+    .lb-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8,10,30,0.6);
+      backdrop-filter: blur(5px);
+    }
+    .lb-modal {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%,-50%);
+      width: calc(100% - 40px);
+      max-width: 1700px;
+      height: calc(100% - 40px);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(4,28,44,0.97);
+      box-shadow: 0 0 30px rgba(0,144,255,0.25), inset 0 0 20px rgba(0,144,255,0.05);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(0,144,255,0.3);
+      animation: lbPop .2s cubic-bezier(.22,.61,.36,1) both;
+    }
+    @keyframes lbPop {
+      from { opacity:0; transform:translate(-50%,-50%) scale(0.97); }
+      to   { opacity:1; transform:translate(-50%,-50%) scale(1); }
+    }
+
+    /* Head */
+    .lb-head {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 16px 20px;
+      border-bottom: 2px solid rgba(0,0,0,0.3);
+      background: linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0));
+      flex-shrink: 0;
+    }
+    .lb-back {
+      width: 50px; height: 50px;
+      border-radius: 12px;
+      background: linear-gradient(180deg,#007acc,#005a9e);
+      border: 1px solid #005a9e;
+      display: grid; place-items: center;
+      cursor: pointer;
+      box-shadow: 0 2px 0 #003d6b;
+      transition: .12s;
+    }
+    .lb-back:hover { transform:translateY(-1px); filter:brightness(1.1); }
+    .lb-back::before {
+      content: '';
+      width: 10px; height: 10px;
+      border-left: 3px solid #9cffea;
+      border-bottom: 3px solid #9cffea;
+      transform: rotate(45deg);
+    }
+    .lb-head h3 { margin:0; font:900 32px/1 Inter; }
+    .lb-head-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .lb-search {
+      height: 44px;
+      padding: 0 16px;
+      border-radius: 10px;
+      border: 1px solid #005a9e;
+      background: #02121c;
+      color: #fff;
+      font: 700 18px/1 Inter;
+      width: 260px;
+    }
+    .lb-search::placeholder { color: rgba(207,227,255,0.4); }
+    .lb-search:focus { box-shadow: 0 0 0 3px rgba(0,144,255,0.3); }
+    .lb-refresh-btn {
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 10px;
+      border: 1px solid #005a9e;
+      background: linear-gradient(180deg,#007acc,#005a9e);
+      color: #fff;
+      font: 800 16px/1 Inter;
+      cursor: pointer;
+      box-shadow: 0 2px 0 #003d6b;
+    }
+    .lb-refresh-btn:hover { filter:brightness(1.1); transform:translateY(-1px); }
+
+    /* Tabs */
+    .lb-tabs {
+      display: flex;
+      gap: 10px;
+      padding: 12px 20px;
+      border-bottom: 1px solid rgba(0,0,0,0.2);
+      flex-shrink: 0;
+    }
+    .lb-tab {
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: 1.5px solid rgba(0,144,255,0.3);
+      background: transparent;
+      color: rgba(207,227,255,0.6);
+      font: 800 18px/1 Inter;
+      cursor: pointer;
+      transition: .15s;
+    }
+    .lb-tab:hover { color:#fff; border-color:#0090ff; }
+    .lb-tab.active {
+      background: linear-gradient(180deg,#0090ff,#005a9e);
+      border-color: #0090ff;
+      color: #fff;
+    }
+
+    /* Table header */
+    .lb-body {
+      flex: 1;
+      overflow: auto;
+      padding: 14px 20px;
+    }
+    .lb-body::-webkit-scrollbar { width: 8px; }
+    .lb-body::-webkit-scrollbar-thumb { background: #02121c; border-radius:10px; border:1px solid #000; }
+
+    .lb-th {
+      display: grid;
+      grid-template-columns: 60px 1fr 140px 160px 130px 110px;
+      gap: 8px;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      border: 1px solid rgba(0,144,255,0.4);
+      border-radius: 14px;
+      background: rgba(4,28,44,0.98);
+      box-shadow: 0 0 12px rgba(0,144,255,0.15);
+      margin-bottom: 8px;
+    }
+    .lb-thc {
+      appearance: none;
+      background: transparent;
+      border: 0;
+      color: #9fdcff;
+      padding: 14px 12px;
+      font: 900 15px/1 Inter;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+      justify-content: center;
+      transition: color .15s;
+    }
+    .lb-thc:first-child { justify-content: flex-start; padding-left:20px; }
+    .lb-thc:nth-child(2) { justify-content: flex-start; }
+    .lb-thc:hover { color:#fff; }
+    .lb-thc.active { color:#fff; }
+    .lb-thc .sort-arrow { font-size:10px; opacity:0.6; }
+
+    /* Rows */
+    .lb-rows { display:flex; flex-direction:column; gap:6px; }
+    .lb-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 140px 160px 130px 110px;
+      gap: 8px;
+      align-items: center;
+      padding: 12px;
+      border-radius: 12px;
+      background: rgba(2,18,28,0.7);
+      border: 1px solid rgba(0,144,255,0.08);
+      transition: .15s;
+    }
+    .lb-row:hover { background: rgba(0,144,255,0.08); border-color:rgba(0,144,255,0.2); }
+    .lb-row.rank-1 { border-color:rgba(255,213,79,0.5); background:linear-gradient(90deg,rgba(255,213,79,0.07),rgba(2,18,28,0.7)); }
+    .lb-row.rank-2 { border-color:rgba(192,199,209,0.5); background:linear-gradient(90deg,rgba(192,199,209,0.07),rgba(2,18,28,0.7)); }
+    .lb-row.rank-3 { border-color:rgba(230,170,118,0.5); background:linear-gradient(90deg,rgba(230,170,118,0.07),rgba(2,18,28,0.7)); }
+    .lb-row.is-me { border-color:rgba(0,144,255,0.5); background:linear-gradient(90deg,rgba(0,144,255,0.12),rgba(2,18,28,0.7)); }
+
+    .lb-rank { font:900 22px/1 Inter; display:flex; align-items:center; justify-content:center; color:#cfe3ff; }
+    .lb-rank-medal { font-size:24px; }
+    .lb-player { display:flex; align-items:center; gap:10px; min-width:0; }
+    .lb-ava {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      display: flex; align-items:center; justify-content:center;
+      font: 900 14px/1 Inter;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px rgba(255,255,255,0.15);
+    }
+    .lb-name { font:900 18px/1 Inter; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .lb-badge-vip {
+      padding: 3px 8px;
+      border-radius: 999px;
+      font: 900 11px/1 Inter;
+      background: linear-gradient(180deg,#ff7b00,#ff5500);
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .lb-num { font:900 18px/1 Inter; text-align:center; color:#cfe3ff; }
+    .lb-num.gold { color:#ffd54f; }
+    .lb-num.blue { color:#2ee9ff; }
+
+    /* Foot */
+    .lb-foot {
+      padding: 14px 20px;
+      border-top: 2px solid rgba(0,0,0,0.3);
+      background: linear-gradient(180deg,transparent,rgba(255,255,255,0.03));
+      flex-shrink: 0;
+    }
+    .lb-me-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 140px 160px 130px 110px;
+      gap: 8px;
+      align-items: center;
+      padding: 14px;
+      border-radius: 12px;
+      background: linear-gradient(90deg,rgba(0,144,255,0.2),rgba(0,90,158,0.15));
+      border: 1px solid rgba(0,144,255,0.5);
+      box-shadow: 0 0 20px rgba(0,144,255,0.15);
+    }
+    .lb-me-label {
+      font: 900 11px/1 Inter;
+      color: #2ee9ff;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    /* ===== SHARED MODAL BASE ===== */
+    .modal-wrap {
+      position: fixed; inset: 0;
+      display: none; place-items: center;
+      z-index: 10000;
+    }
+    .modal-wrap.active { display: grid; }
+    .modal-overlay {
+      position: absolute; inset: 0;
+      background: rgba(8,10,30,0.6);
+      backdrop-filter: blur(5px);
+    }
+    .modal-box {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%,-50%);
+      width: calc(100% - 40px);
+      max-width: 1700px;
+      height: calc(100% - 40px);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(4,28,44,0.97);
+      box-shadow: 0 0 30px rgba(0,144,255,0.25), inset 0 0 20px rgba(0,144,255,0.05);
+      border: 1px solid rgba(0,144,255,0.3);
+      color: #fff;
+      display: flex; flex-direction: column;
+      animation: lbPop .2s cubic-bezier(.22,.61,.36,1) both;
+    }
+    .modal-head {
+      display: flex; align-items: center; gap: 20px;
+      padding: 16px 20px;
+      border-bottom: 2px solid rgba(0,0,0,0.3);
+      background: linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0));
+      flex-shrink: 0;
+    }
+    .modal-back {
+      width: 50px; height: 50px; border-radius: 12px;
+      background: linear-gradient(180deg,#007acc,#005a9e);
+      border: 1px solid #005a9e;
+      display: grid; place-items: center;
+      cursor: pointer; box-shadow: 0 2px 0 #003d6b;
+      transition: .12s; flex-shrink: 0;
+    }
+    .modal-back:hover { transform:translateY(-1px); filter:brightness(1.1); }
+    .modal-back::before {
+      content:''; width:10px; height:10px;
+      border-left:3px solid #9cffea; border-bottom:3px solid #9cffea;
+      transform:rotate(45deg);
+    }
+    .modal-head h3 { margin:0; font:900 32px/1 Inter; }
+    .modal-vip-pill {
+      margin-left: auto;
+      padding: 8px 18px; border-radius: 999px;
+      background: linear-gradient(180deg,#ff7b00,#ff5500);
+      font: 900 14px/1 Inter; color: #fff;
+      box-shadow: 0 0 0 1px #000;
+    }
+
+    /* ===== SETTINGS ===== */
+    .settings-tabbar {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      padding: 12px 18px;
+      border-bottom: 1px solid rgba(0,0,0,0.2);
+      flex-shrink: 0;
+    }
+    .stab {
+      padding: 12px 22px; border-radius: 10px;
+      border: 1.5px solid rgba(0,144,255,0.3);
+      background: transparent;
+      color: rgba(207,227,255,0.6);
+      font: 800 18px/1 Inter; cursor: pointer; transition: .15s;
+    }
+    .stab:hover { color:#fff; border-color:#0090ff; }
+    .stab.active { background:linear-gradient(180deg,#0090ff,#005a9e); border-color:#0090ff; color:#fff; }
+
+    .settings-body { flex:1; overflow:auto; padding:16px 20px; }
+    .settings-body::-webkit-scrollbar { width:8px; }
+    .settings-body::-webkit-scrollbar-thumb { background:#02121c; border-radius:10px; }
+
+    .s-section { display:none; }
+    .s-section.active { display:flex; flex-direction:column; gap:10px; }
+
+    .s-opt {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 18px; border-radius: 14px;
+      background: rgba(2,18,28,0.7);
+      border: 1px solid rgba(0,144,255,0.1);
+    }
+    .s-opt:hover { border-color:rgba(0,144,255,0.25); }
+    .s-left { min-width:280px; max-width:320px; display:flex; flex-direction:column; gap:6px; }
+    .s-title { font:900 22px/1 Inter; color:#fff; }
+    .s-hint { font:600 15px/1.3 Inter; color:#9fdcff; }
+    .s-right { flex:1; display:flex; align-items:center; gap:12px; min-width:0; }
+    .s-vip-badge {
+      margin-left: auto; padding:8px 18px; border-radius:8px;
+      background:#ffb100; color:#fff; font:800 15px/1 Inter;
+    }
+
+    /* inputs inside settings */
+    .s-field {
+      width:100%; padding:10px 16px; border-radius:10px;
+      border:1px solid #005a9e; background:#02121c;
+      color:#fff; font:700 20px/1 Inter;
+    }
+    .s-select {
+      width:100%; padding:10px 16px; border-radius:10px;
+      border:1px solid #005a9e; background:#02121c;
+      color:#fff; font:700 20px/1 Inter; cursor:pointer;
+      appearance:none;
+      background-image:linear-gradient(45deg,transparent 50%,#9ec5ff 50%),linear-gradient(135deg,#9ec5ff 50%,transparent 50%);
+      background-position:calc(100% - 22px) 50%,calc(100% - 16px) 50%;
+      background-size:6px 6px,6px 6px; background-repeat:no-repeat;
+    }
+    .s-select option { background:#02121c; }
+    .s-switch { position:relative; width:60px; height:32px; flex-shrink:0; }
+    .s-switch input { appearance:none; width:100%; height:100%; border-radius:999px; background:#02121c; border:1px solid #005a9e; cursor:pointer; }
+    .s-switch input:checked { background:linear-gradient(180deg,#0090ff,#005a9e); }
+    .s-switch input::after { content:''; position:absolute; top:3px; left:3px; width:26px; height:26px; border-radius:999px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.35); transition:left .15s; }
+    .s-switch input:checked::after { left:31px; }
+    .s-slider-wrap { display:flex; align-items:center; gap:12px; width:100%; }
+    .s-range { appearance:none; width:100%; height:10px; border-radius:999px; background:#02121c; border:1px solid #005a9e; }
+    .s-range::-webkit-slider-thumb { appearance:none; width:18px; height:18px; border-radius:50%; background:#0090ff; border:2px solid #02121c; }
+    .s-val { min-width:64px; text-align:center; padding:8px 14px; border-radius:10px; border:1.5px solid #000; background:#02121c; font:900 16px/1 Inter; color:#fff; }
+    .s-copy-btn {
+      padding:10px 18px; border-radius:10px; border:1.5px solid #000;
+      background:linear-gradient(180deg,#ff7b00,#f6ba06); color:#231800;
+      font:900 16px/1 Inter; cursor:pointer;
+    }
+    .s-ghost-btn {
+      padding:10px 18px; border-radius:10px; border:1.5px solid #000;
+      background:linear-gradient(180deg,#0090ff,#005a9e); color:#fff;
+      font:900 16px/1 Inter; cursor:pointer;
+    }
+    .s-key-row { display:grid; grid-template-columns:220px 1fr; gap:14px; align-items:center; width:100%; }
+    .s-key { display:grid; place-items:center; height:46px; border-radius:10px; background:#02121c; border:1.5px solid #000; color:#fff; font:900 16px/1 Inter; padding:0 10px; text-align:center; }
+    .s-key-desc { font:700 18px/1 Inter; color:#cfe3ff; }
+    .s-vip-lock { position:relative; }
+    .s-vip-lock::before { content:''; position:absolute; inset:0; background:rgba(0,0,0,0.35); border-radius:14px; z-index:1; pointer-events:auto; }
+    .s-vip-lock .s-vip-badge { position:absolute; top:50%; right:14px; transform:translateY(-50%); z-index:2; pointer-events:none; }
+    .s-color-row { display:flex; align-items:center; gap:14px; }
+    .s-color-input { width:60px; height:42px; border-radius:10px; border:1px solid #005a9e; padding:2px; background:#02121c; cursor:pointer; }
+
+    /* ===== STORE ===== */
+    .store-tabs {
+      display: flex; gap: 10px; padding: 12px 18px;
+      border-bottom: 1px solid rgba(0,0,0,0.2); flex-shrink:0;
+    }
+    .store-pill {
+      height: 54px; padding: 0 24px; border-radius: 999px;
+      border: 2px solid #0090ff;
+      background: linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0));
+      font: 900 20px/1 Inter; color: rgba(207,227,255,0.7); cursor: pointer; transition:.15s;
+    }
+    .store-pill.active { background:linear-gradient(180deg,#2ee9ff,#00b6ff); color:#fff; border-color:#0b6aa3; }
+    .store-body { flex:1; overflow:hidden; display:flex; }
+    .store-view { display:none; width:100%; height:100%; }
+    .store-view.active { display:flex; }
+
+    /* Store shell: sidebar + stage */
+    .store-shell { display:grid; grid-template-columns:280px 1fr; gap:0; width:100%; min-width:0; }
+    .store-side {
+      border-right: 1px solid rgba(0,144,255,0.15);
+      padding: 16px; display:flex; flex-direction:column; gap:10px;
+      overflow:auto;
+    }
+    .store-side h5 { font:900 20px/1 Inter; color:#cfe3ff; text-align:center; margin:4px 0 12px; }
+    .store-vbtn {
+      height: 64px; border-radius: 12px;
+      border: 1.5px solid rgba(0,144,255,0.3);
+      background: rgba(2,18,28,0.6);
+      color: #cfe3ff; font:900 18px/1 Inter;
+      cursor:pointer; transition:.15s; display:flex; align-items:center; justify-content:center;
+    }
+    .store-vbtn:hover { border-color:#0090ff; color:#fff; }
+    .store-vbtn.active { background:linear-gradient(90deg,rgba(46,233,255,0.15),rgba(0,182,255,0.15)); border-color:#00c8ff; color:#fff; }
+
+    .store-stage {
+      padding: 16px; display:flex; flex-direction:column; gap:14px;
+      overflow:auto; min-width:0;
+    }
+    /* item grid */
+    .store-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:14px; }
+    .store-item {
+      border-radius: 14px; border: 1.5px solid rgba(0,144,255,0.2);
+      background: rgba(2,18,28,0.8); padding:14px;
+      display:flex; flex-direction:column; align-items:center; gap:10px;
+      cursor:pointer; transition:.15s;
+    }
+    .store-item:hover { border-color:#0090ff; transform:translateY(-2px); box-shadow:0 8px 20px rgba(0,144,255,0.15); }
+    .store-item.selected { border-color:#2ee9ff; box-shadow:0 0 0 2px #2ee9ff inset; }
+    .store-item.owned { border-color:rgba(0,213,90,0.5); }
+    .store-preview {
+      width: 100%; height: 90px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:40px;
+      background: rgba(0,0,0,0.3);
+    }
+    .store-iname { font:900 15px/1 Inter; color:#fff; text-align:center; }
+    .store-iprice {
+      display:flex; align-items:center; gap:6px;
+      font:900 15px/1 Inter; color:#ffd54f;
+    }
+    .store-coin-ico { width:18px; height:18px; border-radius:50%; background:linear-gradient(135deg,#ffd700,#ff9500); display:inline-block; }
+    .store-item-owned { font:800 13px/1 Inter; color:#00d55a; }
+    .store-item-locked { font:800 13px/1 Inter; color:#ffb100; }
+
+    /* store action bar */
+    .store-action-bar {
+      display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+      padding:14px 16px; border-radius:14px;
+      border:1.5px solid rgba(0,144,255,0.2);
+      background:rgba(2,18,28,0.8); flex-shrink:0;
+    }
+    .store-action-name { font:900 20px/1 Inter; color:#fff; flex:1; }
+    .store-action-price { display:flex; align-items:center; gap:8px; font:900 20px/1 Inter; color:#ffd54f; }
+    .store-buy-btn {
+      padding:12px 28px; border-radius:10px; border:1px solid #cc4400;
+      background:linear-gradient(180deg,#ff7b00,#ff5500); color:#fff;
+      font:900 18px/1 Inter; cursor:pointer; box-shadow:0 2px 0 #993300;
+      transition:.12s;
+    }
+    .store-buy-btn:hover { filter:brightness(1.1); transform:translateY(-1px); }
+    .store-equip-btn {
+      padding:12px 28px; border-radius:10px; border:1px solid #007acc;
+      background:linear-gradient(180deg,#0090ff,#005a9e); color:#fff;
+      font:900 18px/1 Inter; cursor:pointer;
+    }
+    .store-wallet {
+      margin-left:auto; display:flex; align-items:center; gap:10px;
+      padding:8px 14px; border-radius:10px;
+      border:1px solid #005a9e; background:#02121c;
+    }
+    .store-wallet-coin { width:30px; height:30px; border-radius:50%; background:linear-gradient(135deg,#ffd700,#ff9500); }
+    .store-wallet-amt { font:900 18px/1 Inter; color:#ffe07a; }
+    .store-get-coins {
+      height:44px; padding:0 18px; border-radius:10px;
+      background:linear-gradient(90deg,#42ff7b,#00d55a);
+      color:#0b1f34; font:900 16px/1 Inter; cursor:pointer; border:0; transition:.12s;
+    }
+    .store-get-coins:hover { filter:brightness(1.1); transform:translateY(-1px); }
+
+/* ===== LOBBY OVERLAY WRAPPER ===== */
+#wormindobby-lobby {
+  position: fixed;
+  inset: 0;
+  z-index: 99000;
+  display: block;
+}
+#wormindobby-lobby.hidden {
+  display: none;
+}
+/* Scale compute on load */
+  </style>
+  <script>
+    /* Compute lobby scale BEFORE render */
+    (() => {
+      const w = document.documentElement.clientWidth;
+      const h = document.documentElement.clientHeight;
+      const k = Math.max(0.1, Math.min(w / 1786, h / 1070));
+      document.documentElement.style.setProperty("--stage-scale", k);
+    })();
+  </script>
+</head>
+<body>
+
+<!-- ===== WORMINDOBBY LOBBY OVERLAY ===== -->
+<div id="wormindobby-lobby">
+<div class="app">
+  <div class="stage-wrap">
+    <div class="stage">
+
+      <!-- HEADER -->
+      <header>
+        <a href="/" class="header-logo">Worm<span>Indo</span></a>
+        <div class="header-buttons">
+          <button class="header-btn settings-btn">Settings</button>
+          <button class="header-btn store-btn">Store</button>
+          <button class="header-btn lead-btn">Leaderboard</button>
+          <button class="header-btn exit-btn">LOG OUT</button>
+        </div>
+      </header>
+
+      <!-- SHELL -->
+      <div class="shell">
+
+        <!-- LEFT PANEL -->
+        <div class="panel">
+          <div class="logo-text-big">
+            <h1>Worm<span>Indo</span></h1>
+          </div>
+          <div class="rklm-box">
+            <h2>WormIndo – Masuk Arena, Bertahan, dan Dominasi</h2>
+            <p>WormIndo adalah game arena online seru yang mengandalkan refleks, posisi, dan keputusan cerdas. Tujuannya sederhana: tumbuh besar, tetap hidup, dan panjat leaderboard.</p>
+            <p>Game berjalan langsung di browser tanpa perlu unduhan. Baik di desktop maupun mobile, WormIndo dirancang memberikan pengalaman bermain yang mulus dan responsif.</p>
+
+            <h3>Cara Bermain WormIndo</h3>
+            <p>Kamu mulai kecil dan tumbuh dengan mengumpulkan makanan di peta. Semakin besar ukuranmu, semakin besar pengaruhmu — tapi juga semakin rentan.</p>
+            <ul>
+              <li>Tumbuh dengan aman sambil memperhatikan sekitar</li>
+              <li>Gunakan gerakan untuk menguasai ruang, bukan hanya kecepatan</li>
+              <li>Paksa lawan membuat kesalahan, bukan sekadar mengejar</li>
+            </ul>
+
+            <h3>Gerakan, Kecepatan, dan Kontrol</h3>
+            <p>Gerakan adalah inti WormIndo. Boost kecepatan memungkinkan pelarian cepat atau serangan tegas, tapi gerakan tak terkontrol sering menyebabkan tabrakan.</p>
+            <ul>
+              <li>Selalu siapkan jalur melarikan diri</li>
+              <li>Hindari pertarungan langsung dengan lawan lebih besar</li>
+              <li>Tekan lawan hanya saat kamu menguasai ruang</li>
+            </ul>
+
+            <h3>Power-Up dan Keuntungan Taktis</h3>
+            <p>Di seluruh arena, pemain bisa mengumpulkan power-up yang memberikan keuntungan sementara seperti kecepatan tambahan atau mobilitas meningkat.</p>
+
+            <h3>Skin dan Gaya Personal</h3>
+            <p>WormIndo menawarkan berbagai pilihan kustomisasi visual. Skin hanya kosmetik dan tidak mempengaruhi keseimbangan gameplay.</p>
+
+            <div class="pro-tip-box">
+              <strong>💡 PRO TIP:</strong> Perhatikan tepian peta! Meski berbahaya, banyak item makanan bernilai tinggi terkumpul di sana.
+            </div>
+
+            <div class="final-call">
+              <h4>Masuk arena. Tumbuh dengan hati-hati. Kuasai ruang.</h4>
+              <p>Di WormIndo, pemain terpintar yang bertahan.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CENTER PANEL -->
+        <div class="panel">
+          <div id="homeMain">
+            <div class="center-top">
+              <!-- Skin preview area (kosong dulu, tanpa cacing) -->
+              <div class="home-center-skins">
+                <div class="skin-placeholder">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="24" cy="24" r="20" stroke="#2ee9ff" stroke-width="2"/>
+                    <path d="M12 24 C12 18 18 14 24 14 C30 14 36 18 36 24 C36 30 30 34 24 34" stroke="#2ee9ff" stroke-width="3" stroke-linecap="round"/>
+                    <circle cx="24" cy="14" r="3" fill="#2ee9ff"/>
+                  </svg>
+                  SKIN PREVIEW
+                </div>
+              </div>
+
+              <div class="center-controls">
+                <button class="play-game-btn">PLAY NOW</button>
+                <div class="home-center-buttons">
+                  <button class="h-btn full-screen-btn">🖥 Fullscreen</button>
+                  <button class="h-btn replay-btn">↺ PLAY AGAIN</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Server area (kosong untuk sekarang) -->
+            <div class="center-bottom">
+              <div class="server-region-tabs">
+                <span class="server-tab active">Europe</span>
+                <span class="server-tab">Asia</span>
+                <span class="server-tab">Americas</span>
+              </div>
+              <div class="server-list-area">
+                SERVER LIST COMING SOON
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT PANEL -->
+        <div class="panel">
+          <div class="player-card">
+            <div class="pi-top">
+              <div class="avatar">W</div>
+              <div class="pi-name">
+                <h3 id="p-name">PLAYER NAME</h3>
+                <span class="badge">VIP</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-placeholder">
+            <p>Stats & fitur akan<br>ditambahkan segera</p>
+          </div>
+        </div>
+
+      </div><!-- /shell -->
+
+      <!-- FOOTER -->
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <div class="foot-left">© 2024 WORMINIDO – All rights reserved</div>
+          <div class="foot-links">
+            <a href="#" class="foot-link">Privacy Policy</a>
+            <a href="#" class="foot-link">Terms of Use</a>
+          </div>
+          <div class="foot-center">
+            <!-- social icons placeholder -->
+          </div>
+          <div class="foot-right">
+            <a href="#" class="footer-site-link">WEB-SKINLAB</a>
+            <span class="support-mail">support@worminido.io</span>
+          </div>
+        </div>
+      </footer>
+
+    </div><!-- /stage -->
+  </div><!-- /stage-wrap -->
+</div><!-- /app -->
+
+<!-- ===== SETTINGS MODAL ===== -->
+<div class="modal-wrap" id="settingsWrap">
+  <div class="modal-overlay" data-close="settingsWrap"></div>
+  <div class="modal-box">
+    <div class="modal-head">
+      <button class="modal-back" data-close="settingsWrap"></button>
+      <h3>⚙️ Settings</h3>
+      <div class="modal-vip-pill">VIP</div>
+    </div>
+
+    <div class="settings-tabbar">
+      <button class="stab active" data-stab="general">General</button>
+      <button class="stab" data-stab="audio">Audio</button>
+      <button class="stab" data-stab="visual">Visual</button>
+      <button class="stab" data-stab="controls">Controls</button>
+      <button class="stab" data-stab="shortcuts">Shortcuts</button>
+      <button class="stab" data-stab="perf">Performance</button>
+    </div>
+
+    <div class="settings-body">
+
+      <!-- GENERAL -->
+      <div class="s-section active" id="stab-general">
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Player ID</div><div class="s-hint">Identitas unikmu</div></div>
+          <div class="s-right">
+            <input class="s-field" id="sPlayerId" value="WI-004729" readonly style="max-width:280px"/>
+            <button class="s-copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('sPlayerId').value);this.textContent='✓ Copied!';setTimeout(()=>this.textContent='COPY',1500)">COPY</button>
+          </div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Background</div><div class="s-hint">Pilih background bawaan</div></div>
+          <div class="s-right">
+            <select class="s-select"><option>Space (Default)</option><option>Jungle</option><option>Ocean</option><option>Desert</option><option>Arctic</option></select>
+          </div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Background Custom</div><div class="s-hint">Upload gambar sendiri</div></div>
+          <div class="s-right">
+            <button class="s-ghost-btn">Pilih File</button>
+            <span style="color:#9fdcff;font:700 15px/1 Inter">Belum ada file</span>
+          </div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Tampilkan Top</div><div class="s-hint">Jumlah pemain di leaderboard in-game</div></div>
+          <div class="s-right">
+            <select class="s-select" style="max-width:120px"><option>5</option><option selected>10</option><option>15</option><option>20</option></select>
+          </div>
+        </div>
+        <div class="s-opt s-vip-lock">
+          <div class="s-left"><div class="s-title">Custom Skin</div><div class="s-hint">Upload file .json skin</div></div>
+          <div class="s-right"><button class="s-ghost-btn">Pilih File</button></div>
+          <div class="s-vip-badge">VIP</div>
+        </div>
+        <div class="s-opt s-vip-lock">
+          <div class="s-left"><div class="s-title">Custom Aksesori</div><div class="s-hint">Upload file .json aksesori</div></div>
+          <div class="s-right"><button class="s-ghost-btn">Pilih File</button></div>
+          <div class="s-vip-badge">VIP</div>
+        </div>
+      </div>
+
+      <!-- AUDIO -->
+      <div class="s-section" id="stab-audio">
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Volume Musik</div></div>
+          <div class="s-right">
+            <div class="s-slider-wrap">
+              <input class="s-range" type="range" min="0" max="100" value="70" oninput="this.nextElementSibling.textContent=this.value+'%'"/>
+              <div class="s-val">70%</div>
+            </div>
+          </div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Volume Efek</div></div>
+          <div class="s-right">
+            <div class="s-slider-wrap">
+              <input class="s-range" type="range" min="0" max="100" value="100" oninput="this.nextElementSibling.textContent=this.value+'%'"/>
+              <div class="s-val">100%</div>
+            </div>
+          </div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Suara Headshot</div></div>
+          <div class="s-right">
+            <select class="s-select"><option>Default</option><option>Boom</option><option>Pop</option><option>Laser</option></select>
+          </div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Suara Headshot 10×</div></div>
+          <div class="s-right">
+            <select class="s-select"><option>Default</option><option>Epic</option><option>Crowd</option></select>
+          </div>
+        </div>
+        <div class="s-opt s-vip-lock">
+          <div class="s-left"><div class="s-title">Suara Bantuan Tim</div></div>
+          <div class="s-right"><label class="s-switch"><input type="checkbox" checked/></label></div>
+          <div class="s-vip-badge">VIP</div>
+        </div>
+      </div>
+
+      <!-- VISUAL -->
+      <div class="s-section" id="stab-visual">
+        <div class="s-opt s-vip-lock">
+          <div class="s-left"><div class="s-title">Warna Peta</div></div>
+          <div class="s-right s-color-row">
+            <input type="color" class="s-color-input" value="#2e45ff" oninput="this.nextElementSibling.textContent=this.value.toUpperCase()"/>
+            <div class="s-val">#2E45FF</div>
+          </div>
+          <div class="s-vip-badge">VIP</div>
+        </div>
+        <div class="s-opt s-vip-lock">
+          <div class="s-left"><div class="s-title">Warna Tim</div></div>
+          <div class="s-right s-color-row">
+            <input type="color" class="s-color-input" value="#20ff43" oninput="this.nextElementSibling.textContent=this.value.toUpperCase()"/>
+            <div class="s-val">#20FF43</div>
+          </div>
+          <div class="s-vip-badge">VIP</div>
+        </div>
+        <div class="s-opt s-vip-lock">
+          <div class="s-left"><div class="s-title">Warna Nama Pemain</div></div>
+          <div class="s-right s-color-row">
+            <input type="color" class="s-color-input" value="#ff2b2b" oninput="this.nextElementSibling.textContent=this.value.toUpperCase()"/>
+            <div class="s-val">#FF2B2B</div>
+          </div>
+          <div class="s-vip-badge">VIP</div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Tampilkan Nama</div></div>
+          <div class="s-right"><label class="s-switch"><input type="checkbox" checked/></label></div>
+        </div>
+      </div>
+
+      <!-- CONTROLS -->
+      <div class="s-section" id="stab-controls">
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Tampilkan Abilities</div></div>
+          <div class="s-right">
+            <select class="s-select"><option>OFF</option><option selected>ESSENTIAL</option><option>FULL</option></select>
+          </div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Joystick Mobile</div></div>
+          <div class="s-right"><label class="s-switch"><input type="checkbox" checked/></label></div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Filter Kata Kasar</div></div>
+          <div class="s-right"><label class="s-switch"><input type="checkbox" checked/></label></div>
+        </div>
+        <div class="s-opt s-vip-lock">
+          <div class="s-left"><div class="s-title">Kode Tim</div><div class="s-hint">Bermain bersama teman</div></div>
+          <div class="s-right"><input class="s-field" type="number" value="45545" style="max-width:160px"/></div>
+          <div class="s-vip-badge">VIP</div>
+        </div>
+      </div>
+
+      <!-- SHORTCUTS -->
+      <div class="s-section" id="stab-shortcuts">
+        <div class="s-opt" style="padding:12px 18px">
+          <div class="s-right" style="width:100%">
+            <div class="s-key-row">
+              <div class="s-key">Q</div><div class="s-key-desc">Mode AFK</div>
+            </div>
+          </div>
+        </div>
+        <div class="s-opt" style="padding:12px 18px">
+          <div class="s-right" style="width:100%">
+            <div class="s-key-row">
+              <div class="s-key">SCROLL / NUMPAD +,-</div><div class="s-key-desc">Zoom</div>
+            </div>
+          </div>
+        </div>
+        <div class="s-opt" style="padding:12px 18px">
+          <div class="s-right" style="width:100%">
+            <div class="s-key-row"><div class="s-key">F</div><div class="s-key-desc">Ganti skin berikutnya</div></div>
+          </div>
+        </div>
+        <div class="s-opt" style="padding:12px 18px">
+          <div class="s-right" style="width:100%">
+            <div class="s-key-row"><div class="s-key">G</div><div class="s-key-desc">Ganti topi berikutnya</div></div>
+          </div>
+        </div>
+        <div class="s-opt" style="padding:12px 18px">
+          <div class="s-right" style="width:100%">
+            <div class="s-key-row"><div class="s-key">R</div><div class="s-key-desc">Main lagi</div></div>
+          </div>
+        </div>
+        <div class="s-opt" style="padding:12px 18px">
+          <div class="s-right" style="width:100%">
+            <div class="s-key-row"><div class="s-key">H</div><div class="s-key-desc">Minta bantuan tim</div></div>
+          </div>
+        </div>
+        <div class="s-opt" style="padding:12px 18px">
+          <div class="s-right" style="width:100%">
+            <div class="s-key-row"><div class="s-key">Z</div><div class="s-key-desc">Reset zoom</div></div>
+          </div>
+        </div>
+        <div class="s-opt" style="padding:12px 18px">
+          <div class="s-right" style="width:100%">
+            <div class="s-key-row"><div class="s-key">C</div><div class="s-key-desc">Ganti background</div></div>
+          </div>
+        </div>
+        <div class="s-opt" style="padding:12px 18px">
+          <div class="s-right" style="width:100%">
+            <div class="s-key-row"><div class="s-key">N</div><div class="s-key-desc">Toggle nama pemain</div></div>
+          </div>
+        </div>
+        <div class="s-opt" style="padding:12px 18px">
+          <div class="s-right" style="width:100%">
+            <div class="s-key-row"><div class="s-key">SHIFT + MOUSE</div><div class="s-key-desc">Drag & Drop UI</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PERFORMANCE -->
+      <div class="s-section" id="stab-perf">
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Resolusi Rendah</div></div>
+          <div class="s-right"><label class="s-switch"><input type="checkbox"/></label></div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Resolusi Sangat Rendah</div></div>
+          <div class="s-right"><label class="s-switch"><input type="checkbox"/></label></div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Zoom Multiplier</div><div class="s-hint">0.25 / 0.50 / 0.75 / 1.00</div></div>
+          <div class="s-right">
+            <div class="s-slider-wrap">
+              <input class="s-range" type="range" min="0.25" max="1" step="0.25" value="0.25" oninput="this.nextElementSibling.textContent=parseFloat(this.value).toFixed(2)"/>
+              <div class="s-val">0.25</div>
+            </div>
+          </div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Ukuran Makanan</div></div>
+          <div class="s-right">
+            <div class="s-slider-wrap">
+              <input class="s-range" type="range" min="0.25" max="3" step="0.25" value="1" oninput="this.nextElementSibling.textContent=parseFloat(this.value).toFixed(2)"/>
+              <div class="s-val">1.00</div>
+            </div>
+          </div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Ukuran Font Nama</div></div>
+          <div class="s-right">
+            <div class="s-slider-wrap">
+              <input class="s-range" type="range" min="10" max="36" step="1" value="22" oninput="this.nextElementSibling.textContent=this.value+'px'"/>
+              <div class="s-val">22px</div>
+            </div>
+          </div>
+        </div>
+        <div class="s-opt">
+          <div class="s-left"><div class="s-title">Gunakan WebGPU</div><div class="s-hint">Performa lebih baik (browser terbaru)</div></div>
+          <div class="s-right"><label class="s-switch"><input type="checkbox"/></label></div>
+        </div>
+      </div>
+
+    </div><!-- /settings-body -->
+  </div>
+</div>
+
+<!-- ===== STORE MODAL ===== -->
+<div class="modal-wrap" id="storeWrap">
+  <div class="modal-overlay" data-close="storeWrap"></div>
+  <div class="modal-box">
+    <div class="modal-head">
+      <button class="modal-back" data-close="storeWrap"></button>
+      <h3 id="storeTitle">🛒 Store — Aksesori</h3>
+      <div class="store-wallet">
+        <div class="store-wallet-coin"></div>
+        <span class="store-wallet-amt" id="walletAmt">12,000</span>
+        <button class="store-get-coins">+ Koin</button>
+      </div>
+    </div>
+
+    <div class="store-tabs">
+      <button class="store-pill active" data-view="acc">Aksesori</button>
+      <button class="store-pill" data-view="skins">Skin</button>
+    </div>
+
+    <div class="store-body">
+
+      <!-- ACCESSORIES VIEW -->
+      <div class="store-view active" id="store-acc">
+        <div class="store-shell">
+          <div class="store-side">
+            <h5>Kategori</h5>
+            <button class="store-vbtn active" data-cat="eyes">👀 Mata</button>
+            <button class="store-vbtn" data-cat="mouth">😄 Mulut</button>
+            <button class="store-vbtn" data-cat="glasses">🕶 Kacamata</button>
+            <button class="store-vbtn" data-cat="hat">🎩 Topi</button>
+          </div>
+          <div class="store-stage">
+            <div class="store-action-bar" id="accActionBar">
+              <span class="store-action-name" id="accSelName">Pilih item untuk melihat detail</span>
+              <span class="store-action-price" id="accSelPrice" style="display:none"><div class="store-coin-ico"></div><span id="accPriceVal">0</span></span>
+              <button class="store-buy-btn" id="accBuyBtn" style="display:none">Beli</button>
+              <button class="store-equip-btn" id="accEquipBtn" style="display:none">Pakai</button>
+            </div>
+            <div class="store-grid" id="accGrid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SKINS VIEW -->
+      <div class="store-view" id="store-skins">
+        <div class="store-shell">
+          <div class="store-side">
+            <h5>Kategori</h5>
+            <button class="store-vbtn active" data-scat="basic">⭐ Basic</button>
+            <button class="store-vbtn" data-scat="neon">💡 Neon</button>
+            <button class="store-vbtn" data-scat="animal">🐍 Animal</button>
+            <button class="store-vbtn" data-scat="special">✨ Special</button>
+          </div>
+          <div class="store-stage">
+            <div class="store-action-bar" id="skinActionBar">
+              <span class="store-action-name" id="skinSelName">Pilih skin untuk melihat detail</span>
+              <span class="store-action-price" id="skinSelPrice" style="display:none"><div class="store-coin-ico"></div><span id="skinPriceVal">0</span></span>
+              <button class="store-buy-btn" id="skinBuyBtn" style="display:none">Beli</button>
+              <button class="store-equip-btn" id="skinEquipBtn" style="display:none">Pakai</button>
+            </div>
+            <div class="store-grid" id="skinGrid"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ===== RESIZE ===== */
+  window.addEventListener('resize', () => {
+    const w = document.documentElement.clientWidth;
+    const h = document.documentElement.clientHeight;
+    const k = Math.max(0.1, Math.min(w / 1786, h / 1070));
+    document.documentElement.style.setProperty('--stage-scale', k);
+  });
+
+  /* ===== MODAL OPEN/CLOSE HELPERS ===== */
+  function openModal(id) { document.getElementById(id).classList.add('active'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+  document.querySelector('.settings-btn').addEventListener('click', () => openModal('settingsWrap'));
+  document.querySelector('.store-btn').addEventListener('click', () => { openModal('storeWrap'); renderAcc('eyes'); renderSkins('basic'); });
+
+  document.querySelectorAll('[data-close]').forEach(el => {
+    el.addEventListener('click', () => closeModal(el.dataset.close));
+  });
+
+  /* ===== SETTINGS TABS ===== */
+  document.querySelectorAll('.stab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.s-section').forEach(s => s.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('stab-' + btn.dataset.stab).classList.add('active');
+    });
+  });
+
+  /* ===== STORE TABS ===== */
+  document.querySelectorAll('.store-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.store-pill').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.store-view').forEach(v => v.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('store-' + btn.dataset.view).classList.add('active');
+      document.getElementById('storeTitle').textContent = btn.dataset.view === 'acc' ? '🛒 Store — Aksesori' : '🛒 Store — Skin';
+    });
+  });
+
+  /* ===== STORE DATA ===== */
+  const ACC_DATA = {
+    eyes:    [{name:'Cute Eyes',emoji:'👁',price:5000,owned:true},{name:'Angry Eyes',emoji:'😠',price:8000,owned:false},{name:'Star Eyes',emoji:'🌟',price:12000,owned:false},{name:'Heart Eyes',emoji:'💖',price:15000,owned:false},{name:'Sunglasses',emoji:'😎',price:10000,owned:true},{name:'Laser Eyes',emoji:'🔴',price:20000,owned:false}],
+    mouth:   [{name:'Smile',emoji:'😊',price:4000,owned:true},{name:'Tongue',emoji:'😛',price:7000,owned:false},{name:'Fangs',emoji:'🦷',price:11000,owned:false},{name:'Tongue Out',emoji:'😜',price:9000,owned:false}],
+    glasses: [{name:'Classic',emoji:'🕶',price:6000,owned:false},{name:'VR Visor',emoji:'🥽',price:18000,owned:false},{name:'Nerd',emoji:'🤓',price:8000,owned:true},{name:'Round',emoji:'👓',price:5000,owned:false}],
+    hat:     [{name:'Cowboy',emoji:'🤠',price:14000,owned:false},{name:'Crown',emoji:'👑',price:25000,owned:false},{name:'Santa',emoji:'🎅',price:12000,owned:false},{name:'Party',emoji:'🎉',price:9000,owned:true},{name:'Chef',emoji:'👨‍🍳',price:10000,owned:false}],
+  };
+  const SKIN_DATA = {
+    basic:   [{name:'Hijau Klasik',emoji:'🟢',price:0,owned:true},{name:'Biru Laut',emoji:'🔵',price:10000,owned:false},{name:'Merah Api',emoji:'🔴',price:10000,owned:true},{name:'Kuning Cerah',emoji:'🟡',price:10000,owned:false}],
+    neon:    [{name:'Neon Cyan',emoji:'💚',price:25000,owned:false},{name:'Neon Pink',emoji:'💗',price:25000,owned:false},{name:'Neon Oranye',emoji:'🟠',price:25000,owned:false},{name:'Neon Ungu',emoji:'🟣',price:25000,owned:false}],
+    animal:  [{name:'Kobra',emoji:'🐍',price:30000,owned:false},{name:'Anaconda',emoji:'🐊',price:35000,owned:false},{name:'Naga',emoji:'🐲',price:50000,owned:false},{name:'Cacing Tanah',emoji:'🪱',price:20000,owned:true}],
+    special: [{name:'Galaxy',emoji:'🌌',price:60000,owned:false},{name:'Pixel Art',emoji:'🟫',price:45000,owned:false},{name:'Rainbow',emoji:'🌈',price:55000,owned:false},{name:'Indonesia',emoji:'🇮🇩',price:40000,owned:false}],
+  };
+
+  let walletCoins = 12000;
+  let selectedAcc = null, selectedSkin = null;
+
+  function fmt3(n) { return n.toLocaleString('id-ID'); }
+
+  function renderGrid(containerId, items, type) {
+    const grid = document.getElementById(containerId);
+    grid.innerHTML = items.map((item, i) => `
+      <div class="store-item${item.owned?' owned':''}" data-idx="${i}" data-type="${type}" onclick="selectItem(this,${i},'${type}')">
+        <div class="store-preview">${item.emoji}</div>
+        <div class="store-iname">${item.name}</div>
+        ${item.owned
+          ? '<div class="store-item-owned">✔ Dimiliki</div>'
+          : `<div class="store-iprice"><div class="store-coin-ico"></div>${fmt3(item.price)}</div>`
+        }
+      </div>`).join('');
+  }
+
+  function renderAcc(cat) {
+    document.querySelectorAll('.store-vbtn[data-cat]').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+    renderGrid('accGrid', ACC_DATA[cat], 'acc');
+    selectedAcc = null;
+    document.getElementById('accSelName').textContent = 'Pilih item untuk melihat detail';
+    document.getElementById('accSelPrice').style.display = 'none';
+    document.getElementById('accBuyBtn').style.display = 'none';
+    document.getElementById('accEquipBtn').style.display = 'none';
+  }
+
+  function renderSkins(cat) {
+    document.querySelectorAll('.store-vbtn[data-scat]').forEach(b => b.classList.toggle('active', b.dataset.scat === cat));
+    renderGrid('skinGrid', SKIN_DATA[cat], 'skin');
+    selectedSkin = null;
+    document.getElementById('skinSelName').textContent = 'Pilih skin untuk melihat detail';
+    document.getElementById('skinSelPrice').style.display = 'none';
+    document.getElementById('skinBuyBtn').style.display = 'none';
+    document.getElementById('skinEquipBtn').style.display = 'none';
+  }
+
+  function selectItem(el, idx, type) {
+    const isAcc = type === 'acc';
+    const cat = isAcc
+      ? document.querySelector('.store-vbtn[data-cat].active').dataset.cat
+      : document.querySelector('.store-vbtn[data-scat].active').dataset.scat;
+    const data = isAcc ? ACC_DATA[cat] : SKIN_DATA[cat];
+    const item = data[idx];
+    const prefix = isAcc ? 'acc' : 'skin';
+
+    document.querySelectorAll(`#${isAcc?'accGrid':'skinGrid'} .store-item`).forEach(e => e.classList.remove('selected'));
+    el.classList.add('selected');
+
+    document.getElementById(`${prefix}SelName`).textContent = item.emoji + '  ' + item.name;
+    if (item.owned) {
+      document.getElementById(`${prefix}SelPrice`).style.display = 'none';
+      document.getElementById(`${prefix}BuyBtn`).style.display = 'none';
+      document.getElementById(`${prefix}EquipBtn`).style.display = 'inline-block';
+    } else {
+      document.getElementById(`${prefix}PriceVal`).textContent = fmt3(item.price);
+      document.getElementById(`${prefix}SelPrice`).style.display = 'flex';
+      document.getElementById(`${prefix}BuyBtn`).style.display = 'inline-block';
+      document.getElementById(`${prefix}EquipBtn`).style.display = 'none';
+    }
+  }
+
+  function buyItem(type) {
+    const isAcc = type === 'acc';
+    const cat = isAcc
+      ? document.querySelector('.store-vbtn[data-cat].active').dataset.cat
+      : document.querySelector('.store-vbtn[data-scat].active').dataset.scat;
+    const data = isAcc ? ACC_DATA[cat] : SKIN_DATA[cat];
+    const selectedEl = document.querySelector(`#${isAcc?'accGrid':'skinGrid'} .store-item.selected`);
+    if (!selectedEl) return;
+    const idx = parseInt(selectedEl.dataset.idx);
+    const item = data[idx];
+    if (walletCoins < item.price) { alert('Koin tidak cukup!'); return; }
+    walletCoins -= item.price;
+    item.owned = true;
+    document.getElementById('walletAmt').textContent = fmt3(walletCoins);
+    isAcc ? renderAcc(cat) : renderSkins(cat);
+  }
+
+  document.getElementById('accBuyBtn').addEventListener('click', () => buyItem('acc'));
+  document.getElementById('skinBuyBtn').addEventListener('click', () => buyItem('skin'));
+  document.getElementById('accEquipBtn').addEventListener('click', () => { alert('Skin/aksesori dipakai! ✓'); });
+  document.getElementById('skinEquipBtn').addEventListener('click', () => { alert('Skin dipakai! ✓'); });
+
+  // Acc category buttons
+  document.querySelectorAll('.store-vbtn[data-cat]').forEach(btn => {
+    btn.addEventListener('click', () => renderAcc(btn.dataset.cat));
+  });
+  // Skin category buttons
+  document.querySelectorAll('.store-vbtn[data-scat]').forEach(btn => {
+    btn.addEventListener('click', () => renderSkins(btn.dataset.scat));
+  });
+</script>
+<div class="lb-wrap" id="lbWrap">
+  <div class="lb-overlay" id="lbOverlay"></div>
+  <div class="lb-modal">
+
+    <div class="lb-head">
+      <button class="lb-back" id="lbClose" title="Tutup"></button>
+      <h3>🏆 Leaderboard</h3>
+      <div class="lb-head-right">
+        <input class="lb-search" id="lbSearch" type="text" placeholder="Cari pemain…" />
+        <button class="lb-refresh-btn" id="lbRefresh">↺ Refresh</button>
+      </div>
+    </div>
+
+    <div class="lb-tabs">
+      <button class="lb-tab active" data-sort="points">Poin</button>
+      <button class="lb-tab" data-sort="kills">Kills</button>
+      <button class="lb-tab" data-sort="hs">Headshots</button>
+      <button class="lb-tab" data-sort="level">Level</button>
+    </div>
+
+    <div class="lb-body">
+      <div class="lb-th">
+        <div class="lb-thc">#</div>
+        <div class="lb-thc">Pemain</div>
+        <button class="lb-thc" data-col="kills">KILLS <span class="sort-arrow">▼</span></button>
+        <button class="lb-thc" data-col="points">POIN <span class="sort-arrow">▼</span></button>
+        <button class="lb-thc" data-col="hs">HS <span class="sort-arrow">▼</span></button>
+        <button class="lb-thc" data-col="level">LVL <span class="sort-arrow">▼</span></button>
+      </div>
+      <div class="lb-rows" id="lbRows"></div>
+    </div>
+
+    <div class="lb-foot">
+      <div class="lb-me-label">KAMU</div>
+      <div class="lb-me-row" id="lbMeRow"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  window.addEventListener('resize', () => {
+    const w = document.documentElement.clientWidth;
+    const h = document.documentElement.clientHeight;
+    const k = Math.max(0.1, Math.min(w / 1786, h / 1070));
+    document.documentElement.style.setProperty('--stage-scale', k);
+  });
+
+  /* ===== LEADERBOARD LOGIC ===== */
+  const AVATARS_COLORS = [
+    ['#1a3a6b','#4da3ff'],['#1a5c2e','#4dff8a'],['#5c1a1a','#ff4d4d'],
+    ['#5c3d1a','#ffaa4d'],['#3d1a5c','#c44dff'],['#1a4d5c','#4dddff'],
+    ['#5c1a4d','#ff4db3'],['#2e4d1a','#a3ff4d']
+  ];
+
+  const mockPlayers = [
+    { name:'ShadowWorm_ID', kills:4521, points:2187340000, hs:2311, level:890, vip:true  },
+    { name:'NagaApi99',     kills:3811, points:1195394600, hs:1859, level:450, vip:true  },
+    { name:'CacingGanas',   kills:3204, points:987432100,  hs:1540, level:380, vip:false },
+    { name:'SerpentKing',   kills:2991, points:876543200,  hs:1420, level:340, vip:true  },
+    { name:'ViperStrike',   kills:2745, points:765432100,  hs:1310, level:310, vip:false },
+    { name:'SlitherGod_JKT',kills:2543, points:654321000,  hs:1205, level:285, vip:true  },
+    { name:'WormMaster_SBY',kills:2312, points:543210000,  hs:1102, level:260, vip:false },
+    { name:'CobraQueen',    kills:2108, points:487654300,  hs:1011, level:240, vip:true  },
+    { name:'AnacondaPro',   kills:1987, points:432100000,  hs:932,  level:220, vip:false },
+    { name:'BoomSlang_BDG', kills:1834, points:398765400,  hs:876,  level:205, vip:false },
+    { name:'PythonElite',   kills:1721, points:365432100,  hs:814,  level:190, vip:true  },
+    { name:'MambaPrince',   kills:1603, points:332100000,  hs:751,  level:178, vip:false },
+    { name:'TempurungID',   kills:1532, points:298765400,  hs:698,  level:165, vip:false },
+    { name:'RatatuiSnek',   kills:1411, points:265432100,  hs:641,  level:152, vip:true  },
+    { name:'BlasterWorm_MDN',kills:1298,points:232100000,  hs:583,  level:140, vip:false },
+    { name:'NeonCobra_MKS', kills:1187, points:198765400,  hs:532,  level:128, vip:false },
+    { name:'UltraSlither',  kills:1076, points:176543200,  hs:489,  level:118, vip:true  },
+    { name:'GreenMamba777', kills:987,  points:154321000,  hs:441,  level:108, vip:false },
+    { name:'SandBoaID',     kills:876,  points:132100000,  hs:392,  level:98,  vip:false },
+    { name:'PLAYER_NAME',   kills:312,  points:45678900,   hs:142,  level:34,  vip:true, isMe:true },
+  ];
+
+  const ME = mockPlayers.find(p => p.isMe);
+  let currentSort = 'points';
+  let currentDir = -1;
+  let filterText = '';
+
+  function fmt(n) {
+    if (n >= 1_000_000_000) return (n/1_000_000_000).toFixed(1) + 'B';
+    if (n >= 1_000_000)     return (n/1_000_000).toFixed(1) + 'M';
+    if (n >= 1_000)         return (n/1_000).toFixed(1) + 'K';
+    return n.toLocaleString();
+  }
+
+  function avatarColors(i) { return AVATARS_COLORS[i % AVATARS_COLORS.length]; }
+
+  function initials(name) { return name.slice(0,2).toUpperCase(); }
+
+  function medal(rank) {
+    if (rank === 1) return '<span class="lb-rank-medal">🥇</span>';
+    if (rank === 2) return '<span class="lb-rank-medal">🥈</span>';
+    if (rank === 3) return '<span class="lb-rank-medal">🥉</span>';
+    return `<span style="color:#9fdcff;font:900 20px/1 Inter">${rank}</span>`;
+  }
+
+  function rowClass(rank, isMe) {
+    if (isMe) return 'lb-row is-me';
+    if (rank === 1) return 'lb-row rank-1';
+    if (rank === 2) return 'lb-row rank-2';
+    if (rank === 3) return 'lb-row rank-3';
+    return 'lb-row';
+  }
+
+  function renderRow(p, rank, colorIdx) {
+    const [bg, fg] = avatarColors(colorIdx);
+    return `
+      <div class="${rowClass(rank, p.isMe)}">
+        <div class="lb-rank">${medal(rank)}</div>
+        <div class="lb-player">
+          <div class="lb-ava" style="background:${bg};color:${fg}">${initials(p.name)}</div>
+          <span class="lb-name">${p.name}</span>
+          ${p.vip ? '<span class="lb-badge-vip">VIP</span>' : ''}
+        </div>
+        <div class="lb-num">${fmt(p.kills)}</div>
+        <div class="lb-num gold">${fmt(p.points)}</div>
+        <div class="lb-num blue">${fmt(p.hs)}</div>
+        <div class="lb-num">${p.level}</div>
+      </div>`;
+  }
+
+  function render() {
+    const sorted = [...mockPlayers]
+      .filter(p => !p.isMe)
+      .sort((a,b) => currentDir * (b[currentSort] - a[currentSort]));
+
+    const filtered = filterText
+      ? sorted.filter(p => p.name.toLowerCase().includes(filterText.toLowerCase()))
+      : sorted;
+
+    document.getElementById('lbRows').innerHTML = filtered
+      .map((p, i) => renderRow(p, i + 1, i))
+      .join('');
+
+    // Me row
+    const meRank = sorted.findIndex(p => p.name === ME.name) + 2;
+    const [mbg, mfg] = avatarColors(0);
+    document.getElementById('lbMeRow').innerHTML = `
+      <div class="lb-rank" style="color:#2ee9ff">#${meRank}</div>
+      <div class="lb-player">
+        <div class="lb-ava" style="background:${mbg};color:${mfg}">${initials(ME.name)}</div>
+        <span class="lb-name" style="color:#2ee9ff">${ME.name}</span>
+        ${ME.vip ? '<span class="lb-badge-vip">VIP</span>' : ''}
+      </div>
+      <div class="lb-num">${fmt(ME.kills)}</div>
+      <div class="lb-num gold">${fmt(ME.points)}</div>
+      <div class="lb-num blue">${fmt(ME.hs)}</div>
+      <div class="lb-num">${ME.level}</div>`;
+  }
+
+  // Open
+  document.querySelector('.lead-btn').addEventListener('click', () => {
+    document.getElementById('lbWrap').classList.add('active');
+    render();
+  });
+  // Close
+  document.getElementById('lbClose').addEventListener('click', () => {
+    document.getElementById('lbWrap').classList.remove('active');
+  });
+  document.getElementById('lbOverlay').addEventListener('click', () => {
+    document.getElementById('lbWrap').classList.remove('active');
+  });
+  // Search
+  document.getElementById('lbSearch').addEventListener('input', e => {
+    filterText = e.target.value;
+    render();
+  });
+  // Refresh (re-randomize scores slightly for demo)
+  document.getElementById('lbRefresh').addEventListener('click', () => {
+    mockPlayers.forEach(p => {
+      if (!p.isMe) {
+        p.kills   += Math.floor(Math.random() * 20);
+        p.points  += Math.floor(Math.random() * 1000000);
+        p.hs      += Math.floor(Math.random() * 10);
+      }
+    });
+    render();
+  });
+  // Tab sort
+  document.querySelectorAll('.lb-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.lb-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentSort = btn.dataset.sort;
+      render();
+    });
+  });
+  // Column header sort
+  document.querySelectorAll('.lb-thc[data-col]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (currentSort === btn.dataset.col) { currentDir *= -1; }
+      else { currentSort = btn.dataset.col; currentDir = -1; }
+      render();
+    });
+  });
+</script>
+</div>
+<!-- ===== END LOBBY OVERLAY ===== -->
+
+
+<div id="game-wrap">
+    <div id="game-cont">
+        <canvas id="background-canvas"></canvas>
+
+        <div id="game-view" class="view">
+            <canvas id="game-canvas"></canvas>
+        </div>
+        <div id="results-view" class="view">
+            <div id="congrats-bg">
+                <div id="congrats-wrap">
+                    <div id="congrats">
+                        <div id="final-caption"></div>
+                        <div id="final-message"></div>
+                        <div id="final-score"></div>
+                        <div id="final-place"></div>
+                        <div id="final-board"></div>
+                        <div class="controls">
+                            <div id="final-continue"></div>
+                            <div id="final-share-vk"></div>
+                            <div id="final-share-fb"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="stretch-box">
+            <div id="main-menu-view" class="stretch-view">
+                <div class="line-top">
+                    <div id="mm-player-info">
+                        <img id="mm-player-avatar" src="/images/guest-avatar-xmas2020.png" alt="Wormate Guest Avatar"/>
+
+                        <div id="mm-player-username" data-guest="Guest">Username</div>
+
+                        <div class="mm-player-exp">
+                            <div id="mm-player-exp-bar"></div>
+                            <div id="mm-player-exp-val">...</div>
+                        </div>
+
+                        <div id="mm-player-level">1</div>
+                    </div><div id="mm-coins-box" style="display: none"><img class="mm-coins-img" src="/images/coin.png" alt="Wormate Coin"/><span id="mm-coins-val">10</span><div id="mm-coins-buy"><span>Buy</span></div>
+                    </div>
+                </div>
+
+                <div class="line-center"><div class="column-left">
+                        
+                            
+                            <div class="description-text">
+    <h1>Wormate.io Adventures Non-Stop</h1>
+    <p>Wormate.io is a smash-hit online game with dynamic storyline and amusing graphics. The game is free to play, start growing your pets today – cute colorful worms. Aiming to become a real anaconda, the little worm never sits on one place – he's ready to have a bite, though he is in danger of becoming a dinner for more luckier fellow.</p>
+    <p>Try to raise your own snake in the game using a browser or application on the tablet or smartphone. Wormate.io team have done everything to provide stable work of Wormate game on any iOS or Android gadget.</p>
+    <h2>Treat the worm with Sweets</h2>
+    <p>The worms are real gourmets. They like to taste cakes, chocolate biscuits, candies and other sweet-stuff.</p>
+    <p>There are so much sweets around the worm that it seems he lives in the candy box. Thus the agile worm grows significantly faster than in other similar games. It means that the top of the leader board is easy to be reached even at the 1st minute of the game.</p>
+    <h2>Amazing skins for the Worm</h2>
+    <p>In our browser game even the gamers, playing without being registered, can use skins limitlessly for free. To get the opportunity of changing three-colored skin for pet to cuter and funnier variant, we kindly ask you to share game with your friends. There are more than 30 different outfits for worms.</p>
+    <h2>Magic Potions for Power-ups</h2>
+    <p>Do you want to take part in the battle for survival as an equal rival of giant worms? Then get your worm to the bottles with magic liquids. The worm can't come across toxic food – all the bonuses are pleasant. It's easy to learn about potion's properties from the color of the bottle:</p>
+    <ul>
+        <li>the green one makes the pet 50% faster;</li>
+        <li>the blue liquid helps to move nimbly;</li>
+        <li>the red-blue potion allows to attract sweets at the distance;</li>
+        <li>the orange bottle contains growth hormone: the light one allow the pet to grow twice faster (x2), the orange potion – up to 5 times quicker, the dark liquid – up to 10 times.</li>
+    </ul>
+    <p>Remember: the expiration term is limited (from 10 to 40 seconds), that's why use the obtained bonuses without hesitation, and the worm will certainly get to the top place of the leader board.</p>
+    <h2>Compete with Friends</h2>
+    <p>Do you spend great time playing? Have you managed to get the record score? Share your results with your buddies at social networks. After finishing the game you can click «Share» button for Facebook, Twitter, or VK, or just go on playing the game for free.</p>
+    <p>Cute worms won't let you get bored, they'll raise the mood in a journey, during the break at work or the long evening. At Wormate.io you'll enjoy colorful design, plenties of sweets and a serious struggle for the first place with the best gamblers from around the world.</p>
+    <p>Start Wormate browser game online and make your pet the longest, strongest and fastest. It's absolutely free and very funny.</p>
+</div>
+                            
+                            
+                            
+                            
+                            
+                        
+                    </div><div class="column-middle">
+
+                        <img class="mm-logo" src="/images/linelogo-xmas2020.png" alt="Wormate.io logo"/>
+
+                        <div class="mm-skin">
+                            <canvas id="mm-skin-canv"></canvas>
+                            <div id="mm-skin-prev"><svg><path d="M28.37 2L48 20.24 28 38V22.28" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;"></path><circle cx="14.73" cy="19.95" style="fill:none;stroke-width:2px;" r="4.8"></circle><circle cx="3.45" cy="20.42" r="2.4" style="fill:none;stroke-width:1px;"></circle></svg></div>
+                            <div id="mm-skin-next"><svg><path d="M28.37 2L48 20.24 28 38V22.28" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;"></path><circle cx="14.73" cy="19.95" style="fill:none;stroke-width:2px;" r="4.8"></circle><circle cx="3.45" cy="20.42" r="2.4" style="fill:none;stroke-width:1px;"></circle></svg></div>
+
+                        </div>
+
+                        <div class="mm-params">
+                            <input id="mm-params-nickname" type="text" placeholder="your nickname"/>
+                            <select id="mm-params-game-mode">
+                                <option value="ARENA">Arena</option>
+                                <option value="TEAM2">2 Teams</option>
+                            </select>
+                        </div>
+
+                        <div class="mm-actions">
+                            <div id="mm-action-buttons">
+                                <div id="mm-action-play" style="display: none"><span>Play</span></div>
+                                <div id="mm-action-guest" style="display: none"><span>Play as guest</span></div>
+                                <div id="mm-action-login" style="display: none"><span>Login</span></div>
+                            </div>
+                        </div>
+
+                        <div id="mm-advice-cont">
+                            <div class="mm-advice"><span>Catch up candies, cookies and cakes!</span></div>
+                            <div class="mm-advice"><span>Move your mouse to control your worm</span></div>
+                            <div class="mm-advice"><span>Press your mouse for acceleration</span></div>
+                            <div class="mm-advice"><span>Cut off others and eat their sweets to grow faster</span></div>
+                        </div>
+
+                    </div><div class="column-right">
+                        <div id="loa831pibur0w4gv">
+                            <div class="label">Advertisement:</div>
+                            <div id="aqnvgcpz05orkobh" style""><div id="WRM_wormate-io_300x250"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line-bottom"><div id="mm-settings">Settings</div><div id="mm-leaders" style="display: none">Leaders</div><div id="mm-store" style="display: none">Store</div>
+                </div>
+            </div>
+
+            <div id="popup-view" class="stretch-view">
+                <div class="stretch-container">
+                    <div class="popup-view-head">
+                        <button id="popup-menu-back"></button>
+                        <span id="popup-menu-label">Leaders</span>
+                        <div id="popup-menu-coins-box">
+                            <img class="coin-img" src="/images/coin.png" alt="Wormate coin"/>
+                            <span id="popup-menu-coins-val">423</span>
+                            <button class="popup-menu-coins-buy">+</button>
+                        </div>
+                    </div>
+
+                    <div class="popup-view-list">
+                        <div id="profile-view" class="base-popup-view">
+                            <div class="profile-user">
+                                <img id="profile-avatar" src="/images/guest-avatar-xmas2020.png" alt="Wormate Guest Avatar"/>
+                                <div id="profile-username"></div>
+                                <div class="exp-cont">
+                                    <div id="profile-experience-bar"></div>
+                                    <div id="profile-experience-val"></div>
+                                </div>
+                                <div id="profile-level">1</div>
+                            </div>
+
+                            <div class="profile-stats">
+                                <div class="stat"><span class="label">High Score</span>         <span id="profile-stat-highScore" class="value">1435235</span></div>
+                                <div class="stat"><span class="label">Best Survival Time</span> <span id="profile-stat-bestSurvivalTime" class="value">1 min 37 sec</span></div>
+                                <div class="stat"><span class="label">Kills</span>              <span id="profile-stat-kills" class="value">423</span></div>
+                                <div class="stat"><span class="label">Headshots</span>          <span id="profile-stat-headshots" class="value">46</span></div>
+                                <div class="stat"><span class="label">Games Played</span>       <span id="profile-stat-gamesPlayed" class="value">34</span></div>
+                                <div class="stat"><span class="label">Total Play Time</span>   <span id="profile-stat-totalTimeSpent" class="value">4 hours 24 min</span></div>
+                                <div class="stat"><span class="label">Registration Date</span>  <span id="profile-stat-registrationDate" class="value">1 Oct 2016</span></div>
+                            </div>
+                        </div>
+
+                        <div id="leaders-view" class="base-popup-view">
+                            <div class="buttons">
+                                <div class="popup-button" id="leaders-button-level">Level</div>
+                                <div class="popup-button" id="leaders-button-highscore">High Score</div>
+                                <div class="popup-button" id="leaders-button-kills">Headshots / Kills</div>
+                            </div>
+
+                            <div class="table-header"><span>Place</span><span></span><span>Name</span><span>Level</span><span>High Score</span><span>Headshots / Kills</span>
+                            </div>
+
+                            <div id="highscore-table">
+                            </div>
+                        </div>
+
+                        <div id="store-view" class="base-popup-view">
+                            <div id="store-go-coins-button" class="store-go-base-button">
+                                <img class="store-go-image" src="/images/store-coins-button.jpg" alt="Coins store"/>
+                                <span class="store-go-text">Coins</span>
+                            </div>
+
+                            <div id="store-go-wear-button" class="store-go-base-button">
+                                <img class="store-go-image" src="/images/store-wear-button.jpg" alt="Wear store"/>
+                                <span class="store-go-text">Clothing</span>
+                            </div>
+
+                            <div id="store-go-skins-button" class="store-go-base-button">
+                                <img class="store-go-image" src="/images/store-skins-button.jpg" alt="Skins store"/>
+                                <span class="store-go-text">Skins</span>
+                            </div>
+                        </div>
+
+                        <div id="skins-view" class="base-popup-view">
+                            <div class="store-left">
+                                <div class="store-view-cont">
+                                    <canvas id="store-view-canv"></canvas>
+                                    <div id="store-view-prev"><svg><path d="M28.37 2L48 20.24 28 38V22.28" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;"></path><circle cx="14.73" cy="19.95" style="fill:none;stroke-width:2px;" r="4.8"></circle><circle cx="3.45" cy="20.42" r="2.4" style="fill:none;stroke-width:1px;"></circle></svg></div>
+                                    <div id="store-view-next"><svg><path d="M28.37 2L48 20.24 28 38V22.28" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;"></path><circle cx="14.73" cy="19.95" style="fill:none;stroke-width:2px;" r="4.8"></circle><circle cx="3.45" cy="20.42" r="2.4" style="fill:none;stroke-width:1px;"></circle></svg></div>
+                                </div>
+
+                                <div id="store-buy-button">
+                                    <span>Buy for</span>
+                                    <img class="coin-img" src="/images/coin.png" alt="Wormate Coin"/>
+                                    <span id="store-item-price">5600123</span>
+                                </div>
+
+                                <div id="store-locked-bar"></div>
+                            </div>
+
+                            <div class="store-right">
+                                <ul id="store-groups"></ul>
+                            </div>
+                        </div>
+
+                        <div id="wear-view" class="base-popup-view">
+                            <ul class="wear-types">
+                                <li id="wear-eyes-button"></li>
+                                <li id="wear-mouths-button"></li>
+                                <li id="wear-glasses-button"></li>
+                                <li id="wear-hats-button"></li>
+                            </ul>
+
+                            <div class="wear-view-cont">
+                                <canvas id="wear-view-canv"></canvas>
+                                <div id="wear-view-prev"><svg><path d="M28.37 2L48 20.24 28 38V22.28" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;"></path><circle cx="14.73" cy="19.95" style="fill:none;stroke-width:2px;" r="4.8"></circle><circle cx="3.45" cy="20.42" r="2.4" style="fill:none;stroke-width:1px;"></circle></svg></div>
+                                <div id="wear-view-next"><svg><path d="M28.37 2L48 20.24 28 38V22.28" style="fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:4px;"></path><circle cx="14.73" cy="19.95" style="fill:none;stroke-width:2px;" r="4.8"></circle><circle cx="3.45" cy="20.42" r="2.4" style="fill:none;stroke-width:1px;"></circle></svg></div>
+                            </div>
+
+                            <div id="wear-tint-chooser"></div>
+
+                            <div class="wear-state">
+                                <div id="wear-buy-button">
+                                    <span>Buy for</span>
+                                    <img class="coin-img" src="/images/coin.png" alt="Wormate Coin"/>
+                                    <span id="wear-item-price">5600123</span>
+                                </div>
+
+                                <div id="wear-locked-bar">Locked</div>
+                            </div>
+                        </div>
+
+                        <div id="coins-view" class="base-popup-view">
+                            <div class="store-coins-free-column">
+                                <span class="store-coins-free-label">Free!</span>
+                            </div>
+
+                            <div class="store-coins-table">
+                                <div class="store-coins-row" id="store-buy-coins_125000">
+                                    <div>Best Deal</div><div>70000</div><div>+</div><div>80%</div><div>=</div><div>125000</div><img src="/images/coin.png" alt="Wormate Coin"/><div><span>$99.99</span></div><div>Buy</div>
+                                </div>
+                                <div class="store-coins-row" id="store-buy-coins_50000">
+                                    <div>Popular</div><div>30000</div><div>+</div><div>65%</div><div>=</div><div>50000</div><img src="/images/coin.png" alt="Wormate Coin"/><div><span>$49.99</span></div><div>Buy</div>
+                                </div>
+                                <div class="store-coins-row" id="store-buy-coins_16000">
+                                    <div></div><div>10000</div><div>+</div><div>60%</div><div>=</div><div>16000</div><img src="/images/coin.png" alt="Wormate Coin"/><div><span>$19.99</span></div><div>Buy</div>
+                                </div>
+                                <div class="store-coins-row" id="store-buy-coins_7000">
+                                    <div></div><div>5000</div><div>+</div><div>40%</div><div>=</div><div>7000</div><img src="/images/coin.png" alt="Wormate Coin"/><div><span>$9.99</span></div><div>Buy</div>
+                                </div>
+                                <div class="store-coins-row" id="store-buy-coins_3250">
+                                    <div></div><div>2500</div><div>+</div><div>30%</div><div>=</div><div>3250</div><img src="/images/coin.png" alt="Wormate Coin"/><div><span>$4.99</span></div><div>Buy</div>
+                                </div>
+                                <div class="store-coins-row" id="store-buy-coins_1250">
+                                    <div></div><div>1000</div><div>+</div><div>25%</div><div>=</div><div>1250</div><img src="/images/coin.png" alt="Wormate Coin"/><div><span>$1.99</span></div><div>Buy</div>
+                                </div>
+                            </div>
+
+                            <div class="store-coins-unavailable">
+                                <div class="sorry">Sorry, online payments are currently unavailable</div>
+                                <div class="use-mobile">
+                                    <span>Consider switching to our mobile app:</span>
+                                    <br/><br/>
+                                    <a class="merchant-button" href="https://itunes.apple.com/us/app/wormate.io/id1135523852?mt=8">
+                                        <img src="/images/store-badge-apple.svg" alt="Get the iOS App!"/>
+                                    </a>
+                                    <a class="merchant-button" href="https://play.google.com/store/apps/details?id=io.wormate">
+                                        <img src="/images/store-badge-google.svg" alt="Get the Android App!"/>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="settings-view" class="base-popup-view">
+                            <div class="settings-line">
+                                wormate.io web client (190e761)
+                            </div>
+
+                            <div class="settings-line" id="settings-music-enabled-line">
+                                <span class="settings-label">Music enabled</span><input class="settings-switch" id="settings-music-enabled-switch" type="checkbox"/><label for="settings-music-enabled-switch"></label>
+                            </div>
+
+                            <div class="settings-line" id="settings-sfx-enabled-line">
+                                <span class="settings-label">SFX enabled</span><input class="settings-switch" id="settings-sfx-enabled-switch" type="checkbox"/><label for="settings-sfx-enabled-switch"></label>
+                            </div>
+
+                            <div class="popup-sep"></div>
+
+                            <div class="settings-line">
+                                <span class="settings-label">Show player names</span><input class="settings-switch" id="settings-show-names-switch" type="checkbox"/><label for="settings-show-names-switch"></label>
+                            </div>
+
+                            <div class="popup-sep"></div>
+
+                            <div id="popup-logout-container">
+                                <div class="settings-line" id="popup-logout">Logout</div>
+                            </div>
+
+                            <div id="popup-withdraw-give-wrapper">
+                                <div class="settings-line" id="popup-withdraw-consent">Withdraw consent</div>
+                                <div class="settings-line" id="popup-give-consent">Change consent</div>
+                            </div>
+                        </div>
+
+                        <div id="login-view" class="base-popup-view">
+                            <div class="settings-line" id="popup-login-gg">Login via Google</div>
+                            <div class="settings-line" id="popup-login-fb">Login via Facebook</div>
+                        </div>
+
+                        <div id="withdraw-consent-view" class="base-popup-view">
+                            <span class="withdraw-consent-question">Withdraw consent?</span>
+
+                            <div class="withdraw-consent-text">You have currently giving your consent to wormate.io's disclosure of the advertising identificator of your device to advertising network companies for the purpose of serving personalized advertisement experience in this game based on your personal preferences.<br/><br/>Are your sure you want to withdraw your consent?<br/><br/>(Please note that if you withdraw your consent, your user license to use this game will be terminated)</div>
+
+                            <div class="withdraw-consent-options">
+                                <div id="withdraw-consent-yes">Yes</div>
+                                <div id="withdraw-consent-no">No</div>
+                            </div>
+                        </div>
+
+                        <div id="please-wait-view"><span>Please wait...</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="loading-view" class="stretch-view">
+                <div class="container">
+                    <img class="loading-logo" src="/images/linelogo-xmas2020.png" alt="Wormate.io logo"/>
+                    <div class="loading-worm" id="loading-worm-a"></div>
+                    <div class="loading-worm" id="loading-worm-b"></div>
+                    <div class="loading-worm" id="loading-worm-c"></div>
+                    <span class="loading-label">loading...</span>
+                </div>
+            </div>
+
+            <div id="toaster-view" class="stretch-view">
+                <div id="toaster-stack"></div>
+            </div>
+        </div>
+
+        <div id="error-view" class="view">We are sorry, but your browser is not supported.&lt;br/&gt;Please update to a more recent one.&lt;br/&gt;wormate.io team &amp;copy; 2016</div>
+    </div>
+</div>
+
+<script type="text/javascript">/*<![CDATA[*/(function () {
+    window.ENV = "main";
+    window.isIPInEEA = false;
+    window.runtimeHash = '190e761';
+})();/*]]>*/</script>
+<script async="async" type="text/javascript" src="/i18n/messages_en.js?v=190e761"></script>
+<script type="text/javascript" src="/js/vendor.js?v=190e761"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+var _gauthObj = {
+  _user: null,
+  _listeners: [],
+  isSignedIn: { get: function() { return !!_gauthObj._user; } },
+  currentUser: {
+    get: function() { return _gauthObj._user; },
+    listen: function(cb) { _gauthObj._listeners.push(cb); }
+  },
+  signIn: function() {
+    document.getElementById('_gg_overlay').style.display = 'flex';
+  },
+  signOut: function() {
+    _gauthObj._user = null;
+    if (typeof google !== 'undefined') google.accounts.id.disableAutoSelect();
+  }
+};
+
+window.handleGoogleCredential = function(response) {
+  document.getElementById('_gg_overlay').style.display = 'none';
+  var user = {
+    isSignedIn: function() { return true; },
+    getAuthResponse: function() { return { id_token: response.credential }; }
+  };
+  _gauthObj._user = user;
+  _gauthObj._listeners.forEach(function(cb) { cb(user); });
+};
+
+var GoogleAuth = new Promise(function(resolve) {
+  (function wait() {
+    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+      google.accounts.id.initialize({
+        client_id: '26622840068-cmsigj7qbenu2sgmk8a6edc9ordg18ie.apps.googleusercontent.com',
+        callback: window.handleGoogleCredential,
+        ux_mode: 'popup',
+        auto_select: false
+      });
+      google.accounts.id.renderButton(
+        document.getElementById('_gg_btn'),
+        { theme: 'outline', size: 'large', text: 'signin_with', width: 280 }
+      );
+      resolve(_gauthObj);
+    } else {
+      setTimeout(wait, 150);
+    }
+  })();
+});
+</script>
+<script async="async" type="text/javascript" src="/js/game.js?v=190e761"></script>
+
+<!-- Google Sign-In overlay -->
+<div id="_gg_overlay" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;">
+  <div style="background:#fff;padding:32px 24px;border-radius:12px;text-align:center;min-width:320px;box-shadow:0 8px 32px rgba(0,0,0,0.4);">
+    <p style="font-family:sans-serif;font-size:16px;color:#333;margin:0 0 20px;font-weight:500;">Login dengan Google</p>
+    <div id="_gg_btn" style="display:flex;justify-content:center;"></div>
+    <p style="font-family:sans-serif;font-size:13px;color:#888;margin:16px 0 0;cursor:pointer;" onclick="document.getElementById('_gg_overlay').style.display='none'">Batal</p>
+  </div>
+</div>
+<!-- ── ZOOM CONTROLS (scroll wheel / keyboard only, no GUI buttons) ──── -->
+<script>
+(function () {
+  const WE_MIN  = 2;
+  const WE_MAX  = 600;
+  const WE_STEP = 1.20;
+
+  let manualWe = null;
+  let lastNatWe = 6;
+
+  window._wmZoomOverride = null;
+
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+  function currentWe() { return manualWe != null ? manualWe : lastNatWe; }
+
+  function sendZoomToServer(we) {
+    try {
+      const ws = window._wmWS;
+      if (ws && ws.readyState === 1) {
+        const enc = Math.max(1, Math.min(255, Math.round(we)));
+        ws.send(new Uint8Array([0xF0, enc]).buffer);
+      }
+    } catch(_) {}
+  }
+
+  function applyZoom(newWe) {
+    manualWe = clamp(newWe, WE_MIN, WE_MAX);
+    window._wmZoomOverride = manualWe;
+    sendZoomToServer(manualWe);
+  }
+
+  function resetZoom() {
+    manualWe = null;
+    window._wmZoomOverride = null;
+    sendZoomToServer(255);
+  }
+
+  function gameActive() {
+    return window._wmWS && window._wmWS.readyState === 1;
+  }
+
+  // Scroll wheel
+  window.addEventListener('wheel', function (e) {
+    if (!gameActive()) return;
+    e.preventDefault();
+    applyZoom(currentWe() * (e.deltaY > 0 ? WE_STEP : 1 / WE_STEP));
+  }, { passive: false, capture: true });
+
+  // Keyboard + / - / 0
+  window.addEventListener('keydown', function (e) {
+    if (!gameActive()) return;
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === '+' || e.key === '=' || e.code === 'Equal')  { e.preventDefault(); applyZoom(currentWe() / WE_STEP); }
+    else if (e.key === '-' || e.code === 'Minus')              { e.preventDefault(); applyZoom(currentWe() * WE_STEP); }
+    else if (e.key === '0' || e.code === 'Digit0')             { e.preventDefault(); resetZoom(); }
+  });
+
+  setInterval(function () {
+    if (manualWe == null && window._wmNatWe != null) lastNatWe = window._wmNatWe;
+  }, 150);
+})();
+</script>
+
+<script>
+/* ===== WORMINDOBBY LOBBY INTEGRATION ===== */
+(function() {
+  /* Resize handler for lobby stage scale */
+  window.addEventListener('resize', () => {
+    const w = document.documentElement.clientWidth;
+    const h = document.documentElement.clientHeight;
+    const k = Math.max(0.1, Math.min(w / 1786, h / 1070));
+    document.documentElement.style.setProperty('--stage-scale', k);
+  });
+
+  function hideLobby() {
+    const lobby = document.getElementById('wormindobby-lobby');
+    if (lobby) {
+      lobby.style.transition = 'opacity 0.4s ease';
+      lobby.style.opacity = '0';
+      setTimeout(() => { lobby.classList.add('hidden'); lobby.style.opacity = ''; }, 400);
+    }
+  }
+
+  function showLobby() {
+    const lobby = document.getElementById('wormindobby-lobby');
+    if (lobby) {
+      lobby.classList.remove('hidden');
+    }
+  }
+
+  /* Wait for DOM ready */
+  document.addEventListener('DOMContentLoaded', function() {
+    /* PLAY NOW → hide lobby, trigger wormate play button */
+    const playBtn = document.querySelector('.play-game-btn');
+    if (playBtn) {
+      playBtn.addEventListener('click', () => {
+        hideLobby();
+        /* Try clicking wormate's play/guest button after small delay */
+        setTimeout(() => {
+          const wmPlay  = document.getElementById('mm-action-play');
+          const wmGuest = document.getElementById('mm-action-guest');
+          if (wmPlay  && wmPlay.style.display  !== 'none') wmPlay.click();
+          else if (wmGuest && wmGuest.style.display !== 'none') wmGuest.click();
+        }, 450);
+      });
+    }
+
+    /* PLAY AGAIN button */
+    const replayBtn = document.querySelector('.replay-btn');
+    if (replayBtn) {
+      replayBtn.addEventListener('click', () => {
+        hideLobby();
+        setTimeout(() => {
+          const wmPlay  = document.getElementById('mm-action-play');
+          const wmGuest = document.getElementById('mm-action-guest');
+          if (wmPlay  && wmPlay.style.display  !== 'none') wmPlay.click();
+          else if (wmGuest && wmGuest.style.display !== 'none') wmGuest.click();
+        }, 450);
+      });
+    }
+
+    /* LOG OUT button → show lobby back */
+    const logoutBtn = document.querySelector('.exit-btn');
+    if (logoutBtn) {
+      logoutBtn.addEventListener('click', () => {
+        /* Trigger wormate logout */
+        const wmLogout = document.getElementById('popup-logout');
+        if (wmLogout) wmLogout.click();
+        setTimeout(showLobby, 300);
+      });
+    }
+
+    /* Sync player name from wormate to lobby */
+    const nameObs = new MutationObserver(() => {
+      const wmName = document.getElementById('mm-player-username');
+      const lobbyName = document.getElementById('p-name');
+      if (wmName && lobbyName) {
+        const txt = wmName.textContent.trim();
+        if (txt && txt !== 'Username') lobbyName.textContent = txt.toUpperCase();
+      }
+    });
+    const wmUsername = document.getElementById('mm-player-username');
+    if (wmUsername) nameObs.observe(wmUsername, { childList:true, subtree:true, characterData:true });
+
+    /* Server tabs → update game mode select */
+    document.querySelectorAll('.server-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.server-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const modeMap = { 'Europe': 'ARENA', 'Asia': 'ARENA', 'Americas': 'ARENA', '2 Teams': 'TEAM2' };
+        const select = document.getElementById('mm-params-game-mode');
+        if (select && modeMap[tab.textContent]) select.value = modeMap[tab.textContent];
+      });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
