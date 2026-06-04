@@ -1153,7 +1153,7 @@ class GameRoom {
 
 // Daftar nama bot yang unik tanpa angka
 const BOT_NAMES = [
-  'ByGfIcaaan', 'ByGfIcaaan', 'ByGfIcaaan', 'ByGfIcaaan', 'ByGfIcaaan', 'ByGfIcaaan', 'ByGfIcaaan', 'ByGfIcaaan', 'ByGfIcaaan', 'ByGfIcaaan'
+  'RemakeByBoruto', 'RemakeByBoruto', 'RemakeByBoruto', 'RemakeByBoruto', 'RemakeByBoruto', 'RemakeByBoruto', 'RemakeByBoruto', 'RemakeByBoruto', 'RemakeByBoruto', 'RemakeByBoruto'
 ];
 
 // Bot yang pintar dan jago (menggunakan AI yang lebih agresif)
